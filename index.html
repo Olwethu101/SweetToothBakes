@@ -1,0 +1,984 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Velvet Crumb Cakes</title>
+  <meta name="description" content="Luxury custom cake studio for weddings, birthdays and celebrations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff8fa;
+      --bg-soft: #fff0f5;
+      --panel: #fffcfd;
+      --panel-2: #fdebf1;
+      --ivory: #38212b;
+      --rose: #ffe0ec;
+      --rose-2: #f04e98;
+      --gold: #f04e98;
+      --gold-2: #a92d62;
+      --line: rgba(56, 33, 43, 0.12);
+      --muted: rgba(56, 33, 43, 0.72);
+      --text: #38212b;
+      --shadow: rgba(56, 33, 43, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+      color: var(--text);
+      font-family: 'Manrope', sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: linear-gradient(180deg, #a92d62 0%, #38212b 100%);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+    
+    .topbar-strip .container {
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      min-height: 42px;
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .topbar-meta {
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+    .meta-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.35rem 0.7rem; border-radius: 999px;
+      background: rgba(0, 0, 0, 0.12); border: 1px solid rgba(240,78,152,0.38);
+      color: #fff8fa;
+    }
+    .nav-row {
+      min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 22px;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 12px; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+      color: #fff8fa;
+    }
+    .brand-mark {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff 0%, #ffe0ec 20%, #f04e98 56%, #a92d62 100%);
+      position: relative; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .brand-mark::before {
+      content: ""; position: absolute; inset: 7px; border-radius: 50%; background: rgba(255,255,255,0.45);
+    }
+    .nav {
+      display: flex; align-items: center; gap: 28px;
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.72);
+    }
+    .nav a {
+      position: relative; padding-bottom: 4px;
+      transition: color 0.2s ease;
+    }
+    .nav a::after {
+      content: ""; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--gold); transition: width 0.2s ease;
+    }
+    .nav a:hover { color: var(--rose); }
+    .nav a:hover::after { width: 100%; }
+    .nav-btn {
+      padding: 0.82rem 1.25rem; border: 1px solid rgba(255,255,255,0.18); border-radius: 999px;
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+      background: rgba(255,255,255,0.02); color: rgba(255,255,255,0.9);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .nav-btn:hover {
+      background: linear-gradient(135deg, rgba(240,78,152,0.24), rgba(169,45,98,0.14));
+      border-color: rgba(240,78,152,0.42);
+    }
+    .menu-toggle, .mobile-menu { display: none; }
+    .menu-toggle {
+      align-items: center; justify-content: center; gap: 9px; padding: 0.72rem 0.9rem;
+      border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; background: transparent;
+      color: #fff; font: inherit; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      cursor: pointer;
+    }
+    .menu-toggle-icon, .menu-toggle-icon::before, .menu-toggle-icon::after {
+      display: block; width: 17px; height: 1px; background: currentColor;
+    }
+    .menu-toggle-icon { position: relative; }
+    .menu-toggle-icon::before, .menu-toggle-icon::after { content: ""; position: absolute; left: 0; }
+    .menu-toggle-icon::before { top: -5px; }
+    .menu-toggle-icon::after { top: 5px; }
+    .mobile-menu[hidden] { display: none; }
+    .mobile-menu:not([hidden]) { display: block; }
+    .mobile-menu-backdrop { position: fixed; inset: 0; z-index: 39; width: 100%; height: 100%; border: 0; background: rgba(16,11,9,0.62); }
+    .mobile-menu-panel {
+      position: fixed; z-index: 40; inset: 0 0 0 auto; display: flex; flex-direction: column; gap: 26px;
+      width: min(86vw, 360px); min-height: 100vh; padding: 28px 24px;
+      background: #38212b; box-shadow: -18px 0 50px rgba(0,0,0,0.25); color: #fff8fa;
+    }
+    .mobile-menu-heading { display: flex; align-items: center; justify-content: space-between; }
+    .mobile-menu-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; }
+    .mobile-menu-close { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; background: transparent; color: #fff; font-size: 1.5rem; cursor: pointer; }
+    .mobile-nav { display: flex; flex-direction: column; gap: 0; }
+    .mobile-nav a { padding: 16px 2px; border-bottom: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.86); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .mobile-booking { margin-top: auto; text-align: center; }
+    .hero {
+      padding: 72px 0 56px;
+      background: radial-gradient(circle at 80% 14%, rgba(240,78,152,0.14), transparent 18%), linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 42px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 12px; color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 18px;
+    }
+    .eyebrow::before { content: ""; width: 42px; height: 1px; background: rgba(240,78,152,0.9); }
+    h1, h2, h3 { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: -0.03em; }
+    .hero h1 { font-size: clamp(4rem, 7vw, 7rem); line-height: 0.86; }
+    .lead { margin-top: 20px; max-width: 540px; color: var(--muted); font-size: 1.05rem; line-height: 1.9; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 26px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.18); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 800;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--gold-2) 0%, #87244e 100%); color: #fff; border-color: transparent; }
+    .btn-secondary { background: rgba(255,255,255,0.02); color: var(--text); }
+    .hero-stats {
+      margin-top: 34px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;
+    }
+    .stat { padding-top: 18px; border-top: 1px solid var(--line); }
+    .stat strong { display: block; font-size: 1.8rem; margin-bottom: 6px; }
+    .stat span { color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.68rem; }
+    .showcase { position: relative; min-height: 580px; }
+    .photo-card {
+      position: absolute; overflow: hidden; border-radius: 30px; background: var(--panel); border: 1px solid var(--line); box-shadow: 0 34px 70px var(--shadow);
+    }
+    .photo-card img { width: 100%; height: 100%; object-fit: cover; }
+    .main-photo { inset: 0 18% 0 0; }
+    .small-photo { right: 8%; bottom: 48px; width: 42%; height: 42%; }
+    .floating-card {
+      position: absolute; left: 42%; bottom: 52px; width: min(260px, 62%); 
+      background: rgba(255, 248, 250, 0.94); 
+      border: 1px solid var(--line); 
+      border-radius: 18px; 
+      padding: 18px 18px 16px; 
+      box-shadow: 0 22px 50px rgba(0,0,0,0.2);
+    }
+    .floating-card .mini-tag { display: block; color: var(--gold); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+    .floating-card strong { display: block; font-size: 1.7rem; font-family: 'Cormorant Garamond', serif; }
+    .floating-card p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
+    section { padding: 76px 0; }
+    .section-header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 40px; }
+    @media (min-width: 981px) {
+      .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .section-header p { max-width: 720px; }
+    }
+    .section-header h2 { font-size: clamp(2.7rem, 3.6vw, 4.3rem); }
+    .section-header p { margin: 0; max-width: 520px; color: var(--muted); line-height: 1.8; }
+    .story-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 26px; }
+    .story-visual, .story-copy, .cake-card, .process-card, .review-card, .faq-item, .contact-box { background: rgba(255,255,255,0.72); border: 1px solid var(--line); border-radius: 28px; }
+    .story-visual img { width: 100%; min-height: 540px; object-fit: cover; border-radius: 28px; }
+    .story-copy { padding: 40px 34px; }
+    .story-copy h3 { font-size: clamp(2.5rem, 3vw, 3.5rem); }
+    .story-copy p { color: var(--muted); line-height: 1.9; margin: 16px 0 0; }
+    .signature-row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 22px; }
+    .cake-card { padding: 18px 18px 22px; overflow: hidden; }
+    .cake-image { position: relative; height: 360px; border-radius: 22px; overflow: hidden; margin-bottom: 18px; }
+    .cake-image img { width: 100%; height: 100%; object-fit: cover; }
+    .cake-badge { position: absolute; left: 18px; top: 18px; padding: 0.66rem 0.8rem; border-radius:999px; background: rgba(15,11,10,0.82); border: 1px solid rgba(255,255,255,0.12); color: var(--gold); font-size: 0.66rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .cake-meta { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .cake-meta h3 { font-size: clamp(2rem, 2.5vw, 2.6rem); }
+    .price { color: var(--gold); font-weight: 700; }
+    .cake-card p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .process-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 22px; }
+    .process-card { padding: 26px 22px; }
+    .process-number { display: inline-flex; width: 42px; height:42px; border-radius:50%; background: rgba(240,78,152,0.14); color: var(--gold-2); align-items:center; justify-content:center; font-weight:800; margin-bottom: 16px; }
+    .process-card h3 { font-size: 2.1rem; margin-bottom: 10px; }
+    .process-card p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .gallery-grid { display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr; gap: 22px; }
+    .gallery-grid button[hidden] { display: none; }
+    .gallery-large, .gallery-tall, .gallery-square {
+      position: relative; display: block; width: 100%; padding: 0; overflow: hidden; border-radius: 28px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.02); cursor: zoom-in; text-align: left;
+    }
+    .gallery-large { grid-row: span 2; }
+    .gallery-large img, .gallery-tall img, .gallery-square img { width:100%; height:100%; object-fit:cover; }
+    .gallery-large img { min-height: 500px; }
+    .gallery-tall img, .gallery-square img { min-height: 240px; }
+    .gallery-large img, .gallery-tall img, .gallery-square img { transition: transform 0.55s cubic-bezier(.2,.7,.2,1), filter 0.35s ease; }
+    .gallery-large:hover img, .gallery-tall:hover img, .gallery-square:hover img,
+    .gallery-large:focus-visible img, .gallery-tall:focus-visible img, .gallery-square:focus-visible img {
+      transform: scale(1.045); filter: brightness(0.78);
+    }
+    .gallery-large:focus-visible, .gallery-tall:focus-visible, .gallery-square:focus-visible {
+      outline: 2px solid var(--gold); outline-offset: 4px;
+    }
+    .gallery-hint {
+      position: absolute; right: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.7rem 0.9rem; border: 1px solid rgba(255,255,255,0.22); border-radius: 999px;
+      background: rgba(24,18,16,0.74); color: #fff; font-size: 0.62rem; letter-spacing: 0.13em;
+      text-transform: uppercase; opacity: 0; transform: translateY(5px); transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+    .gallery-instruction { margin: -4px 0 18px; color: var(--muted); line-height: 1.6; }
+    .gallery-large:hover .gallery-hint, .gallery-tall:hover .gallery-hint, .gallery-square:hover .gallery-hint,
+    .gallery-large:focus-visible .gallery-hint, .gallery-tall:focus-visible .gallery-hint, .gallery-square:focus-visible .gallery-hint {
+      opacity: 1; transform: translateY(0);
+    }
+    .lightbox {
+      width: min(1120px, calc(100% - 32px)); max-width: none; max-height: min(92vh, 900px); padding: 0;
+      color: #fff; background: #171210; border: 1px solid rgba(255,255,255,0.16); border-radius: 22px;
+      box-shadow: 0 30px 100px rgba(0,0,0,0.55); overflow: hidden;
+    }
+    .lightbox::backdrop { background: rgba(12,9,8,0.86); backdrop-filter: blur(8px); }
+    .lightbox-frame { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; min-height: 300px; max-height: 92vh; }
+    .lightbox-image-wrap { display: grid; place-items: center; min-height: 0; padding: 56px 74px 20px; }
+    .lightbox-image { display: block; max-width: 100%; max-height: calc(92vh - 150px); width: auto; height: auto; object-fit: contain; }
+    .lightbox-caption {
+      display: flex; justify-content: space-between; align-items: center; gap: 18px;
+      padding: 16px 22px 20px; border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .lightbox-caption span:first-child { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; }
+    .lightbox-counter { color: rgba(255,255,255,0.64); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .lightbox-control {
+      position: absolute; z-index: 1; display: inline-grid; place-items: center; width: 44px; height: 44px;
+      border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; color: #fff; background: rgba(20,15,13,0.74);
+      cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .lightbox-control:hover { background: rgba(169,45,98,0.92); border-color: rgba(255,255,255,0.5); }
+    .lightbox-control:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .lightbox-close { top: 14px; right: 14px; font-size: 1.3rem; }
+    .lightbox-prev, .lightbox-next { top: 50%; transform: translateY(-50%); font-size: 1.4rem; }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
+    .review-card { padding: 26px 22px; }
+    .quote { display: block; font-size: 4.5rem; line-height: 0.65; color: var(--gold); margin-bottom: 14px; }
+    .review-card p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .review-author { display:flex; align-items:center; gap: 12px; margin-top: 22px; }
+    .avatar { width: 46px; height:46px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background: linear-gradient(135deg, var(--rose), var(--gold)); color: #120d0d; font-weight: 800; }
+    .review-author strong { display:block; letter-spacing: 0.12em; text-transform: uppercase; font-size:0.76rem; }
+    .review-author span { display:block; color: var(--muted); font-size:0.72rem; margin-top:2px; }
+    .faq-wrap { display:grid; grid-template-columns: 0.95fr 1.05fr; gap: 26px; }
+    .faq-list { display:grid; gap:18px; }
+    .faq-item { padding: 22px 20px; }
+    .faq-item h3 { font-size: 1.8rem; margin-bottom: 8px; }
+    .faq-item p { margin:0; color: var(--muted); line-height:1.8; }
+    .contact-box { display:grid; grid-template-columns: 1.05fr 0.95fr; gap: 22px; padding: 28px; }
+    .contact-box h3 { font-size: clamp(2.5rem, 3vw, 3.7rem); }
+    .contact-box p { margin: 18px 0 0; color: var(--muted); line-height: 1.8; }
+    .contact-details { display:grid; gap:18px; margin-top: 24px; }
+    .detail { display:flex; gap:12px; align-items:flex-start; }
+    .detail .icon { width:42px; height:42px; border-radius:50%; background: rgba(240,78,152,0.14); display:inline-flex; align-items:center; justify-content:center; color: var(--gold-2); font-weight: 700; }
+    .detail span { display:block; color: var(--muted); font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; }
+    .detail strong { display:block; margin-top: 4px; font-size:1.05rem; }
+    form { display:grid; gap:14px; }
+    .input-row { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    input, textarea {
+      width:100%; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.78); color: var(--text); padding: 0.9rem 1rem; font: inherit;
+    }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    textarea { min-height: 150px; border-radius: 14px; resize: vertical; }
+    .footer {
+      padding: 36px 0 26px; border-top: 1px solid rgba(255,255,255,0.12); 
+      background: linear-gradient(180deg, #38212b 0%, #a92d62 100%);
+      position: relative; overflow: hidden; color: #fff;
+    }
+    .footer::before {
+      content: ""; position: absolute; inset: 0 auto auto 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(240,78,152,0.62), transparent);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.7fr) minmax(0, 0.7fr) minmax(0, 1fr); gap: 28px; align-items: start;
+    }
+    .footer-brand-block { max-width: 340px; }
+    .footer-brand-block .brand { color: #fff8fa; }
+    .footer-brand-block p {
+      margin: 14px 0 0; color: #fff; line-height: 1.7;
+    }
+    .footer-brand-block .brand p { margin: 1em 0; line-height: normal; }
+    .footer-links,
+    .footer-nav,
+    .footer-socials {
+      display: flex; flex-wrap: wrap; gap: 12px 18px;
+    }
+    .footer-links, .footer-nav { flex-direction: column; }
+    .footer-links a, .footer-nav a {
+      color: #fff; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .footer-links a:hover, .footer-nav a:hover { color: #ffe0ec; }
+    .footer-socials { align-items: center; gap: 10px; }
+    .footer-socials a {
+      display: inline-flex; align-items: center; gap: 9px; padding: 0.7rem 0.9rem;
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; background: rgba(255,255,255,0.08);
+      color: #fff; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .footer-socials a:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.42); transform: translateY(-2px); }
+    .footer-socials svg { width: 18px; height: 18px; flex: 0 0 18px; fill: currentColor; }
+    .footer-title {
+      display: block; margin-bottom: 16px; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: #fff;
+    }
+    .footer-title-accent { color: var(--gold); }
+    .footer-contact {
+      display: grid; gap: 10px; color: #fff; line-height: 1.6;
+    }
+    .footer-contact a { color: #fff; }
+    .footer-row {
+      display:flex; align-items:center; justify-content:space-between; gap:16px; color: #fff; border-top: 1px solid rgba(255,255,255,0.22); margin-top: 26px; padding-top: 18px;
+    }
+    @media (min-width: 981px) {
+      .footer-grid { grid-template-columns: minmax(0, 1fr); }
+      .footer-brand-block {
+        display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.7fr) minmax(0, 0.7fr);
+        gap: 28px; align-items: start; max-width: none;
+      }
+      #gallery-view-more { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 980px) {
+      .hero-grid, .story-grid, .faq-wrap, .contact-box { grid-template-columns: 1fr; }
+      .signature-row, .process-grid, .reviews-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 22px; }
+      .nav { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .nav-row > .nav-btn { display: none; }
+    }
+    @media (max-width: 680px) {
+      .topbar { position: fixed; inset: 0 0 auto; }
+      body { padding-top: 78px; }
+      section { padding: 52px 0; }
+      .hero { padding-top: 42px; }
+      .hero-stats, .signature-row, .process-grid, .reviews-grid, .input-row { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .hero-stats .stat strong { font-size: 1.35rem; }
+      .hero-stats .stat span { font-size: 0.58rem; letter-spacing: 0.08em; }
+      .story-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 12px; align-items: start; }
+      .story-visual img { height: 230px; min-height: 0; border-radius: 20px; }
+      .story-copy { min-width: 0; padding: 16px 12px; border-radius: 20px; }
+      .story-copy h3 { font-size: clamp(1.35rem, 5.5vw, 1.8rem); }
+      .story-copy p { font-size: 0.7rem; line-height: 1.5; margin-top: 9px; }
+      .story-copy .eyebrow { gap: 6px; font-size: 0.52rem; letter-spacing: 0.09em; margin-bottom: 10px; }
+      .story-copy .eyebrow::before { width: 18px; }
+      .showcase { min-height: 500px; }
+      .main-photo { inset: 0 0 0 0; }
+      .small-photo { right: 14px; bottom: 18px; width: 48%; height: 40%; }
+      .floating-card { left: 18px; width: 60%; }
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .gallery-large { grid-row: auto; }
+      .gallery-large, .gallery-tall, .gallery-square { height: 190px; }
+      .gallery-large img, .gallery-tall img, .gallery-square img { min-height: 0; }
+      .gallery-hint { right: 8px; bottom: 8px; opacity: 1; transform: none; padding: 0.55rem 0.65rem; font-size: 0.52rem; }
+      .section-header { display:block; }
+      .footer-brand-block { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 18px; max-width: none; }
+      .footer-brand-block > .brand { grid-column: 1 / -1; }
+      .footer-grid { gap: 24px 18px; }
+      .footer-title { margin-bottom: 12px; }
+      .footer-socials { justify-content: flex-start; }
+      .footer-socials a { gap: 6px; padding: 0.58rem 0.62rem; font-size: 0.58rem; letter-spacing: 0.04em; }
+      .footer-socials svg { width: 16px; height: 16px; flex-basis: 16px; }
+      .footer-row { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
+      .footer-socials { flex-wrap: nowrap; gap: 6px; }
+      .footer-socials a { width: 34px; height: 34px; justify-content: center; padding: 0; }
+      .footer-socials a span { display: none; }
+      .footer-socials svg { width: 16px; height: 16px; flex-basis: 16px; }
+      .lightbox-image-wrap { padding: 58px 16px 16px; }
+      .lightbox-image { max-height: calc(82vh - 150px); }
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-caption { padding: 14px 16px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .gallery-large img, .gallery-tall img, .gallery-square img, .gallery-hint { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+   
+
+    <div class="container nav-row">
+      <a href="#home" class="brand" aria-label="Sweet Tooth Bakes">
+        <span><img src="assets/images/logo/logo.png" alt="Sweet Tooth Bakes Logo" width="55" height="60" /></span>
+        <p>Sweet <br> Tooth <br> Bakes</p>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#collections">Collections</a>
+        <a href="#process">Process</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="nav-btn" href="#contact">Book a consult</a>
+      <button class="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">
+        <span class="menu-toggle-icon" aria-hidden="true"></span>
+        <span>Menu</span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <button class="mobile-menu-backdrop" type="button" aria-label="Close navigation menu"></button>
+      <aside class="mobile-menu-panel" aria-label="Mobile navigation">
+        <div class="mobile-menu-heading">
+          <span class="mobile-menu-title">Sweet Tooth Bakes</span>
+          <button class="mobile-menu-close" type="button" aria-label="Close navigation menu">×</button>
+        </div>
+        <nav class="mobile-nav" aria-label="Mobile navigation links">
+          <a href="#about">About</a>
+          <a href="#collections">Collections</a>
+          <a href="#process">Process</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="btn btn-primary mobile-booking" href="#contact">Book a consult</a>
+      </aside>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">BSespoke design</div>
+          <h1>Luxury cakes for life’s sweetest moments.</h1>
+          <p class="lead">From intimate celebrations to grand occasions, we craft elevated custom cakes that feel personal, polished, and unforgettable designed to delight both the eye and the palate.</p>
+          <div class="cta-row">
+            <a href="#collections" class="btn btn-primary">Explore collections</a>
+            <a href="#contact" class="btn btn-secondary">Request a quote</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><strong>3+</strong><span>Years crafting</span></div>
+            <div class="stat"><strong>100+</strong><span>Cakes delivered</span></div>
+            <div class="stat"><strong>4.7/5</strong><span>Client love</span></div>
+          </div>
+        </div>
+
+        <div class="showcase" aria-label="Featured cake display">
+          <div class="photo-card main-photo">
+            <img src="assets/images/Main.jpg" alt="Elegant custom wedding cake" />
+          </div>
+          <div class="floating-card">
+            <span class="mini-tag">Signature favorite</span>
+            <strong>Rose &amp; Champagne</strong>
+            <p>Vanilla sponge with strawberry compote and silky vanilla buttercream.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">Our story</div>
+            <h2>Artfully made, beautifully personal.</h2>
+          </div>
+          <p>Every cake begins with a conversation. We turn your vision, flavor notes, and celebration details into a design that feels distinctly yours.</p>
+        </div>
+        <div class="story-grid">
+          <div class="story-visual">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80" alt="Cake artisan working on a premium cake" />
+          </div> 
+          <div class="story-copy">
+            <div class="eyebrow">Crafted with care</div>
+            <h3>Bespoke cakes for meaningful celebrations.</h3>
+            <p>At Velvet Crumb, we believe the best cakes are more than desserts, they’re a meaningful centerpiece of the moment.</p>
+            <p>Whether you’re celebrating a wedding, milestone birthday, commemorative event, or private gathering, we shape each detail around your story and your taste.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="collections">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">Signature collections</div>
+            <h2>Made for moments worth savoring.</h2>
+          </div>
+          <p>From joyful birthdays to once-in-a-lifetime weddings, discover a cake made for your moment beautifully crafted, full of flavor, and impossible to forget.</p>
+        </div>
+        <div class="signature-row">
+          
+          <article class="cake-card">
+            <div class="cake-image">
+              <img src="assets/images/collection/birthday.jpg" alt="Birthday cake collection" />
+              <span class="cake-badge">Birthday</span>
+            </div>
+            <div class="cake-meta"><h3>Birthday Cakes</h3><span class="price">From R359.00</span></div>
+            <p>Fresh, joyful cakes that feel modern and personal perfect for celebrating every milestone with sparkle and personality.</p>
+          </article>
+          <article class="cake-card">
+            <div class="cake-image">
+              <img src="assets/images/gallery/signature.jpg" alt="Celebration cake" />
+              <span class="cake-badge">Signature</span>
+            </div>
+            <div class="cake-meta"><h3>Celebration Cakes</h3><span class="price">From R489.00</span></div>
+            <p>Statement cakes for anniversaries, private dinner parties, and meaningful events designed with elevated style.</p>
+          </article>
+          <article class="cake-card">
+            <div class="cake-image">
+              <img src="assets/images/gallery/custom.jpg" alt="Custom" />
+              <span class="cake-badge">Custom</span>
+            </div>
+            <div class="cake-meta"><h3>Custom Cakes</h3><span class="price">From R499.00</span></div>
+            <p>Personalized cakes tailored to your unique vision and preferences for any special occasion.</p>
+          </article>
+          <article class="cake-card">
+            <div class="cake-image">
+              <img src="assets/images/gallery/bakedGoods.jpg" alt="Baked goods collection" />
+              <span class="cake-badge">Baked Goods</span>
+            </div>
+            <div class="cake-meta"><h3>Baked Goods</h3><span class="price">From R149.00</span></div>
+            <p>Romantic tiers, floral detailing, and refined flavor pairings designed for normal days.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">Simple process</div>
+            <h2>A seamless cake experience from concept to celebration.</h2>
+          </div>
+          <p>We keep the process smooth and tailored, with planning, styling, baking, and final delivery handled with care and precision.</p>
+        </div>
+        <div class="process-grid">
+          <article class="process-card">
+            <div class="process-number">01</div>
+            <h3>Consult</h3>
+            <p>We learn about your event, aesthetic, and flavor preferences before shaping your concept.</p>
+          </article>
+          <article class="process-card">
+            <div class="process-number">02</div>
+            <h3>Design</h3>
+            <p>Our studio translates your vision into a refined design, including color, styling, and flourishes.</p>
+          </article>
+          <article class="process-card">
+            <div class="process-number">03</div>
+            <h3>Bake</h3>
+            <p>Each cake is handcrafted in small batches with premium ingredients and careful finishing touches.</p>
+          </article>
+          <article class="process-card">
+            <div class="process-number">04</div>
+            <h3>Deliver</h3>
+            <p>We coordinate a fresh, beautifully presented cake so your gathering feels effortless and polished.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">Recent work</div>
+            <h2>Beautiful cakes, unforgettable reveals.</h2>
+          </div>
+          <p>A glimpse into our custom cakes for intimate events, and milestone celebrations.</p>
+        </div>
+        <p class="gallery-instruction">Tap or click any photo to view it full size.</p>
+        <div class="gallery-grid" aria-label="Cake photo gallery">
+          <button class="gallery-large" type="button" aria-label="Enlarge custom cake photo">
+            <img src="assets/images/gallery/IMG-20261017-WA0053.jpg" alt="Custom cake photo from our gallery" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-tall" type="button" aria-label="Enlarge white cake with black ribbon photo">
+            <img src="assets/images/gallery/IMG-20261017-WA0054.jpg" alt="White celebration cake with black ribbon details" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge blue and white cupcakes photo">
+            <img src="assets/images/gallery/IMG-20261017-WA0055.jpg" alt="Blue and white decorated cupcakes arranged in a display box" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge Frozen-themed cake photo">
+            <img src="assets/images/gallery/IMG-20261017-WA0058.jpg" alt="Blue Frozen-themed celebration cake with an Elsa topper" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-tall" type="button" aria-label="Enlarge calendar design celebration cake photo">
+            <img src="assets/images/gallery/IMG-20261017-WA0059.jpg" alt="White celebration cake with a red ribbon and calendar design" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 6" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0057.jpg" alt="Custom cake photo 6" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 7" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0060.jpg" alt="Custom cake photo 7" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 8" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0061.jpg" alt="Custom cake photo 8" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 9" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0062.jpg" alt="Custom cake photo 9" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 10" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0064.jpg" alt="Custom cake photo 10" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 11" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0065.jpg" alt="Custom cake photo 11" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 12" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0066.jpg" alt="Custom cake photo 12" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 13" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0067.jpg" alt="Custom cake photo 13" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 14" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0068.jpg" alt="Custom cake photo 14" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 15" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0069.jpg" alt="Custom cake photo 15" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 16" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0070.jpg" alt="Custom cake photo 16" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 17" hidden>
+            <img src="assets/images/gallery/dzfgz.jpg" alt="Custom cake photo 17" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 18" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0075.jpg" alt="Custom cake photo 18" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 19" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0077.jpg" alt="Custom cake photo 19" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 20" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0079.jpg" alt="Custom cake photo 20" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 21" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0080.jpg" alt="Custom cake photo 21" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 22" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0081.jpg" alt="Custom cake photo 22" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 23" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0082.jpg" alt="Custom cake photo 23" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 24" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0083.jpg" alt="Custom cake photo 24" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 25" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0084.jpg" alt="Custom cake photo 25" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 26" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0086.jpg" alt="Custom cake photo 26" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 27" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0087.jpg" alt="Custom cake photo 27" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo 28" hidden>
+            <img src="assets/images/gallery/IMG-20261017-WA0089.jpg" alt="Custom cake photo 28" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge baked goods photo" hidden>
+            <img src="assets/images/gallery/1.jpg" alt="Baked goods from our gallery 29" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo" hidden>
+            <img src="assets/images/gallery/2.jpg" alt="Custom cake from our gallery" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo" hidden>
+            <img src="assets/images/gallery/dzfgz.jpg" alt="Custom cake from our gallery" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge custom cake photo" hidden>
+            <img src="assets/images/gallery/hjefsjkfs.jpg" alt="Custom cake from our gallery" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge signature cake photo" hidden>
+            <img src="assets/images/gallery/3.jpg" alt="Signature cake from our gallery" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+          <button class="gallery-square" type="button" aria-label="Enlarge wedding cake photo" hidden>
+            <img src="assets/images/gallery/wedding.jpg" alt="Custom Cake 34" />
+            <span class="gallery-hint" aria-hidden="true">⌕ View full image</span>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-secondary" id="gallery-view-more" type="button" style="margin-top: 32px;">View More</button>
+    </section>
+
+    <dialog class="lightbox" aria-label="Enlarged cake photo">
+      <div class="lightbox-frame">
+        <button class="lightbox-control lightbox-close" type="button" aria-label="Close enlarged image">×</button>
+        <button class="lightbox-control lightbox-prev" type="button" aria-label="View previous photo">‹</button>
+        <div class="lightbox-image-wrap">
+          <img class="lightbox-image" src="" alt="" />
+        </div>
+        <button class="lightbox-control lightbox-next" type="button" aria-label="View next photo">›</button>
+        <div class="lightbox-caption">
+          <span class="lightbox-title"></span>
+          <span class="lightbox-counter" aria-live="polite"></span>
+        </div>
+      </div>
+    </dialog>
+
+    <section id="reviews">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">Client love</div>
+            <h2>Thoughtfully made, deeply loved.</h2>
+          </div>
+          <p>Our clients come to us for standout design and stay for service, quality, and flavor that feels unforgettable.</p>
+        </div>
+        <div class="reviews-grid">
+          <article class="review-card">
+            <span class="quote">“</span>
+            <p>My graduation cake was the most stunning centerpiece of the entire day. Every guest commented on the design and the flavor was even better than expected.</p>
+            <div class="review-author"><div class="avatar">A</div><div><strong>Amanda R.</strong><span>Graduation client</span></div></div>
+          </article>
+          <article class="review-card">
+            <span class="quote">“</span>
+            <p>The entire experience felt elevated and effortless. The cake looked like a piece of art and tasted just as beautiful as it looked.</p>
+            <div class="review-author"><div class="avatar">M</div><div><strong>Michael T.</strong><span>Birthday client</span></div></div>
+          </article>
+          <article class="review-card">
+            <span class="quote">“</span>
+            <p>We wanted something elegant and personal, and the final cake felt tailor-made for our celebration in every way.</p>
+            <div class="review-author"><div class="avatar">S</div><div><strong>Sophia L.</strong><span>Anniversary client</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container faq-wrap">
+        <div>
+          <div class="section-header" style="display:block; margin-bottom:24px;">
+            <div class="eyebrow">Frequently asked</div>
+            <h2 style="font-size: clamp(2.5rem, 3vw, 4rem);">Questions before your order?</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq-item"><h3>How far in advance should I book?</h3><p>We recommend booking 2-6 weeks in advance, especially for large events.</p></div>
+            <div class="faq-item"><h3>Do you offer flavor tastings?</h3><p>Yes. We offer tasting consultations for any of our available flavors so you can choose the perfect one for you.</p></div>
+            <div class="faq-item"><h3>Can you match a theme or palette?</h3><p>Absolutely. We can match colors, floral styles, and overall mood to your event design.</p></div>
+          </div>
+        </div>
+
+        <div class="contact-box">
+          <div>
+            <div class="eyebrow">Get in touch</div>
+            <h3>Let’s create your next signature cake.</h3>
+            <p>Share your event details, mood, and inspiration, we’ll help shape a custom cake that feels elegant, personal, and memorable.</p>
+            <div class="contact-details">
+              <div class="detail"><div class="icon">✦</div><div><span>Call us</span><strong></strong>+27 84 470 6678</div></div>
+              <div class="detail"><div class="icon">✦</div><div><span>Email</span><strong>mtungwanz@gmail.com</strong></div></div>
+              <div class="detail"><div class="icon">✦</div><div><span>Studio</span><strong>Pretoria North, South Africa</strong></div></div>
+            </div>
+          </div>
+          <form>
+            <div class="input-row">
+              <input type="text" name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required />
+              <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required />
+            </div>
+            <input type="text" name="event-date" placeholder="Event date" aria-label="Event date" />
+            <input type="text" name="cake-type" placeholder="Cake type / occasion" aria-label="Cake type or occasion" />
+            <textarea name="vision" placeholder="Tell us about your vision..." aria-label="Tell us about your vision" required></textarea>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Send request</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-block">
+        <a href="#home" class="brand" aria-label="Sweet Tooth Bakes">
+          <span><img src="assets/images/logo/logo.png" alt="Sweet Tooth Bakes Logo" width="55" height="60" /></span>
+          <p>Sweet <br> Tooth <br> Bakes</p>
+        </a>
+
+      <div>
+        <span class="footer-title footer-title-accent">Explore</span>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#collections">Collections</a>
+          <a href="#process">Process</a>
+          <a href="#gallery">Gallery</a>
+        </div>
+      </div>
+
+      <div>
+        <span class="footer-title footer-title-accent">Visit</span>
+        <div class="footer-nav">
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Consultation</a>
+          <a href="#contact">FAQ</a>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="container footer-row">
+      <span>© 2026 Sweet Tooth Bakes</span>
+      <div class="footer-socials">
+        <a href="https://wa.me/27844706678" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp 084 470 6678">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2a9.93 9.93 0 0 0-8.52 15.04L2 22l5.1-1.34A9.98 9.98 0 1 0 12.04 2Zm0 18.18a8.15 8.15 0 0 1-4.15-1.13l-.3-.18-3.03.8.81-2.95-.2-.31a8.17 8.17 0 1 1 6.87 3.77Zm4.48-6.12c-.25-.13-1.48-.73-1.71-.82-.23-.08-.4-.13-.56.13-.17.25-.65.82-.8.99-.15.17-.29.19-.54.06-.25-.12-1.05-.39-2-.1-.74-.67-1.24-1.5-1.38-1.75-.15-.25-.02-.39.11-.52.11-.11.25-.29.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31s-.86.84-.86 2.06.88 2.39 1 2.56c.12.17 1.73 2.64 4.19 3.7.58.25 1.03.4 1.38.51.58.18 1.1.15 1.51.09.46-.07 1.48-.61 1.69-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29Z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+        <a href="mailto:mtungwanz@gmail.com" aria-label="Email mtungwanz@gmail.com">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17A1.5 1.5 0 0 1 22 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 17.5v-11A1.5 1.5 0 0 1 3.5 5Zm8.5 7.3L19.9 7H4.1l7.9 5.3Zm0 2.4L4 8.8v8.7h16V8.8l-8 5.9Z"/></svg>
+          <span>Email</span>
+        </a>
+        <a href="https://www.instagram.com/sweettoothbakes21/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @sweetthoothbakes21">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9Zm4.5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.25-3.25a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z"/></svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (() => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.querySelector('#mobile-menu');
+      const mobileMenuClose = mobileMenu.querySelector('.mobile-menu-close');
+      const mobileMenuBackdrop = mobileMenu.querySelector('.mobile-menu-backdrop');
+
+      const closeMobileMenu = () => {
+        mobileMenu.hidden = true;
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.focus();
+      };
+
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.hidden = false;
+        menuToggle.setAttribute('aria-expanded', 'true');
+        mobileMenuClose.focus();
+      });
+      mobileMenuClose.addEventListener('click', closeMobileMenu);
+      mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+      mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMobileMenu));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !mobileMenu.hidden) closeMobileMenu();
+      });
+
+      const contactForm = document.querySelector('.contact-box form');
+      contactForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(contactForm);
+        const name = formData.get('name');
+        const subject = `Cake enquiry from ${name}`;
+        const body = [
+          `Name: ${name}`,
+          `Email: ${formData.get('email')}`,
+          `Event date: ${formData.get('event-date') || 'Not provided'}`,
+          `Cake type / occasion: ${formData.get('cake-type') || 'Not provided'}`,
+          '',
+          'Vision:',
+          formData.get('vision')
+        ].join('\n');
+        window.location.href = `mailto:mtungwanz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+
+      const galleryItems = Array.from(document.querySelectorAll('.gallery-grid button'));
+      const galleryGrid = document.querySelector('.gallery-grid');
+      const galleryViewMore = document.querySelector('#gallery-view-more');
+      const initialGalleryCount = 5;
+      const lightbox = document.querySelector('.lightbox');
+      const lightboxImage = document.querySelector('.lightbox-image');
+      const lightboxTitle = document.querySelector('.lightbox-title');
+      const lightboxCounter = document.querySelector('.lightbox-counter');
+      const closeButton = document.querySelector('.lightbox-close');
+      const previousButton = document.querySelector('.lightbox-prev');
+      const nextButton = document.querySelector('.lightbox-next');
+      let activeIndex = 0;
+      let previouslyFocused = null;
+
+      const showImage = (index) => {
+        galleryItems.splice(0, galleryItems.length, ...galleryGrid.querySelectorAll('button:not([hidden])'));
+        activeIndex = (index + galleryItems.length) % galleryItems.length;
+        const image = galleryItems[activeIndex].querySelector('img');
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt;
+        lightboxTitle.textContent = image.alt;
+        lightboxCounter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(galleryItems.length).padStart(2, '0')}`;
+      };
+
+      galleryGrid.addEventListener('click', (event) => {
+        const item = event.target.closest('button');
+        if (item) {
+          galleryItems.splice(0, galleryItems.length, ...galleryGrid.querySelectorAll('button:not([hidden])'));
+          const index = galleryItems.indexOf(item);
+          previouslyFocused = item;
+          showImage(index);
+          lightbox.showModal();
+          closeButton.focus();
+        }
+      });
+
+      galleryViewMore.addEventListener('click', () => {
+        if (galleryViewMore.getAttribute('aria-expanded') === 'true') {
+          Array.from(galleryGrid.querySelectorAll('button')).slice(initialGalleryCount).forEach((item) => {
+            item.hidden = true;
+          });
+          galleryItems.splice(0, galleryItems.length, ...galleryGrid.querySelectorAll('button:not([hidden])'));
+          galleryViewMore.textContent = 'View More';
+          galleryViewMore.setAttribute('aria-expanded', 'false');
+          requestAnimationFrame(() => {
+            const galleryTop = document.querySelector('#gallery').getBoundingClientRect().top + window.scrollY;
+            const headerOffset = document.querySelector('.topbar').getBoundingClientRect().height + 12;
+            window.scrollTo({ top: galleryTop - headerOffset, behavior: 'smooth' });
+          });
+          return;
+        }
+
+        galleryGrid.querySelectorAll('button').forEach((item) => {
+          item.hidden = false;
+        });
+        galleryItems.splice(0, galleryItems.length, ...galleryGrid.querySelectorAll('button:not([hidden])'));
+        galleryViewMore.textContent = 'View Less';
+        galleryViewMore.setAttribute('aria-expanded', 'true');
+      });
+
+      closeButton.addEventListener('click', () => lightbox.close());
+      previousButton.addEventListener('click', () => showImage(activeIndex - 1));
+      nextButton.addEventListener('click', () => showImage(activeIndex + 1));
+
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) lightbox.close();
+      });
+
+      lightbox.addEventListener('close', () => {
+        lightboxImage.removeAttribute('src');
+        if (previouslyFocused) previouslyFocused.focus();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (!lightbox.open) return;
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          lightbox.close();
+        }
+        if (event.key === 'ArrowLeft') showImage(activeIndex - 1);
+        if (event.key === 'ArrowRight') showImage(activeIndex + 1);
+      });
+    })();
+  </script>
+</body>
+</html>
